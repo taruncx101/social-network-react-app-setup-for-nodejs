@@ -51,7 +51,7 @@ class Feed extends Component {
       page--;
       this.setState({ postPage: page });
     }
-    const apiUrl = this.state.apiBaseUrl+'/feed/posts'
+    const apiUrl = this.state.apiBaseUrl+'/feed/posts?page='+page
     fetch(apiUrl)
       .then(res => {
         if (res.status !== 200) {
