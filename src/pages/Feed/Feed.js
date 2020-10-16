@@ -18,7 +18,8 @@ class Feed extends Component {
     status: '',
     postPage: 1,
     postsLoading: true,
-    editLoading: false
+    editLoading: false,
+    apiBaseUrl: 'http://localhost:8001'
   };
 
   componentDidMount() {
@@ -50,7 +51,8 @@ class Feed extends Component {
       page--;
       this.setState({ postPage: page });
     }
-    fetch('URL')
+    const apiUrl = this.state.apiBaseUrl+'/feed/posts'
+    fetch(apiUrl)
       .then(res => {
         if (res.status !== 200) {
           throw new Error('Failed to fetch posts.');
