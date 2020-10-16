@@ -23,17 +23,17 @@ class Feed extends Component {
   };
 
   componentDidMount() {
-    fetch('URL')
-      .then(res => {
-        if (res.status !== 200) {
-          throw new Error('Failed to fetch user status.');
-        }
-        return res.json();
-      })
-      .then(resData => {
-        this.setState({ status: resData.status });
-      })
-      .catch(this.catchError);
+    // fetch('URL')
+    //   .then(res => {
+    //     if (res.status !== 200) {
+    //       throw new Error('Failed to fetch user status.');
+    //     }
+    //     return res.json();
+    //   })
+    //   .then(resData => {
+    //     this.setState({ status: resData.status });
+    //   })
+    //   .catch(this.catchError);
 
     this.loadPosts();
   }

@@ -5,31 +5,34 @@ import './SinglePost.css';
 
 class SinglePost extends Component {
   state = {
-    title: '',
-    author: '',
-    date: '',
-    image: '',
-    content: ''
+    title: "",
+    author: "",
+    date: "",
+    image: "",
+    content: "",
+    apiBaseUrl: "http://localhost:8001",
   };
 
   componentDidMount() {
     const postId = this.props.match.params.postId;
-    fetch('URL')
-      .then(res => {
+    const url = `${this.state.apiBaseUrl}/feed/post/${postId}`
+    fetch(url)
+      .then((res) => {
         if (res.status !== 200) {
-          throw new Error('Failed to fetch status');
+          throw new Error("Failed to fetch status");
         }
         return res.json();
       })
-      .then(resData => {
+      .then((resData) => {
         this.setState({
           title: resData.post.title,
           author: resData.post.creator.name,
-          date: new Date(resData.post.createdAt).toLocaleDateString('en-US'),
-          content: resData.post.content
+          date: new Date(resData.post.createdAt).toLocaleDateString("en-US"),
+          content: resData.post.content,
+          image: `${this.state.apiBaseUrl}/${resData.post.imageUrl}`
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
