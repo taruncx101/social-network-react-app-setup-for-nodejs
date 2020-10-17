@@ -52,7 +52,11 @@ class Feed extends Component {
       this.setState({ postPage: page });
     }
     const apiUrl = this.state.apiBaseUrl+'/feed/posts?page='+page
-    fetch(apiUrl)
+    fetch(apiUrl, {
+      headers: {
+        Authorization: 'Bearer '+this.props.token
+      }
+    })
       .then(res => {
         if (res.status !== 200) {
           throw new Error('Failed to fetch posts.');
@@ -125,6 +129,9 @@ class Feed extends Component {
     }
 
     fetch(url, {
+      headers: {
+        Authorization: 'Bearer '+this.props.token
+      },
       method,
       body: formData,
     })
@@ -179,22 +186,25 @@ class Feed extends Component {
     this.setState({ postsLoading: true });
     const url = this.state.apiBaseUrl + "/feed/post/" + postId;
     fetch(url, {
-      method: 'DELETE'
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + this.props.token,
+      },
     })
-      .then(res => {
+      .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Deleting a post failed!');
+          throw new Error("Deleting a post failed!");
         }
         return res.json();
       })
-      .then(resData => {
+      .then((resData) => {
         console.log(resData);
-        this.setState(prevState => {
-          const updatedPosts = prevState.posts.filter(p => p._id !== postId);
+        this.setState((prevState) => {
+          const updatedPosts = prevState.posts.filter((p) => p._id !== postId);
           return { posts: updatedPosts, postsLoading: false };
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         this.setState({ postsLoading: false });
       });
